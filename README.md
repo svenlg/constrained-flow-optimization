@@ -51,9 +51,7 @@ python run_cfo.py --reward dipole --constraint energy --bound -80 --reward_lambd
 
 ## Configuration
 
-Configs live in `configs/` (gitignored). Create `configs/cfo.yaml`:
-
-CLI flags override config values (e.g., `--reward_lambda 100 --bound -90`).
+Configs live in `configs/`. The default `configs/cfo.yaml` is included in the repository. CLI flags override config values (e.g., `--reward_lambda 100 --bound -90`).
 
 ### CLI Flags
 
@@ -129,7 +127,7 @@ src/
 flowmol/                          # Pretrained FlowMol (included as subpackage)
 regressor/                        # GNN and EGNN property predictors
 pretrained_models/                # Pretrained regressor weights (not tracked)
-configs/                          # YAML configs (not tracked, see below)
+configs/                          # YAML configs (tracked)
 notebooks/                        # Demos and paper figure notebooks
 utils/                            # CLI argument parsing, sampling, plotting
 auxiliary/                        # Regressor training pipeline
