@@ -1,0 +1,34 @@
+### Gitignore ###
+.DS_Store
+.vscode/
+.claude/
+*.sh
+*.txt
+
+### Config ###
+configs/
+
+### Folders ###
+ai_finder_results/
+aa_experiments/
+data/
+fsscore/
+output/
+pretrained_models/
+flowmol/trained_models/
+wandb/
+lightning_logs/
+
+### pyc and pycache ###
+*.pyc
+__pycache__/
+*.ipynb_checkpoints
+
+
+### Images and Videos ###
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.npy
