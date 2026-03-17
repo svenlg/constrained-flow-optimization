@@ -11,7 +11,6 @@ aa_experiments/
 data/
 fsscore/
 output/
-pretrained_models/
 flowmol/trained_models/
 wandb/
 lightning_logs/

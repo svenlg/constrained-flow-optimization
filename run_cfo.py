@@ -45,8 +45,7 @@ def load_regressor(config: OmegaConf, device: torch.device) -> nn.Module:
     K_a = 10  # atom features
     K_c = 6   # charge classes
     K_e = 5   # bond types
-    print(config.fn, config.model_type, config.date)
-    model_path = osp.join("pretrained_models", str(config.fn), str(config.model_type), str(config.date), "best_model.pt")
+    model_path = osp.join("pretrained_models", str(config.fn), str(config.model_type), "best_model.pt")
     state = torch.load(model_path, map_location=device)
     if config.model_type == "gnn":
         model_config = {

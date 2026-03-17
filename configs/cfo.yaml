@@ -22,37 +22,12 @@ max_num_atoms: null
 reward:
   fn: dipole
   model_type: egnn # gnn or egnn
-  date: "0922_1829" # (gnn - 0902_2001) (egnn - 0922_1829) (egnn - 0923_1058)
-
-# reward:
-#   fn: homolumo_gap
-#   model_type: egnn
-#   date: "1120_1823"
-
-# reward:
-#   fn: energy
-#   model_type: gnn
-#   date: "0923_1520"
 
 #### Constraint ####
-
-# constraint:
-#   fn: score
-#   bound: 0.2
-#   model_type: gnn
-#   date: "0923_1520"
-
 constraint:
   fn: energy
   bound: -80
   model_type: gnn
-  date: "0923_1520"
-
-# constraint:
-#   fn: sascore
-#   bound: 6.5
-#   model_type: egnn
-#   date: "1027_1445"
 
 #### Augmented Lagrangian ####
 augmented_lagrangian:
