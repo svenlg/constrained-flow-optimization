@@ -1,0 +1,95 @@
+#### General ####
+seed: 42
+
+#### Experiment ####
+experiment: "debug"
+
+#### Root ####
+root: .
+
+#### FlowMol ####
+flow_model: "geom_gaussian" # geom_ctmc | geom_gaussian
+
+#### Iterations ####
+total_steps: 60
+
+#### Atoms per molecule ####
+n_atoms: 45 # int or null
+min_num_atoms: null
+max_num_atoms: null
+
+#### Reward ####
+reward:
+  fn: dipole
+  model_type: egnn # gnn or egnn
+  date: "0922_1829" # (gnn - 0902_2001) (egnn - 0922_1829) (egnn - 0923_1058)
+
+# reward:
+#   fn: homolumo_gap
+#   model_type: egnn
+#   date: "1120_1823"
+
+# reward:
+#   fn: energy
+#   model_type: gnn
+#   date: "0923_1520"
+
+#### Constraint ####
+
+# constraint:
+#   fn: score
+#   bound: 0.2
+#   model_type: gnn
+#   date: "0923_1520"
+
+constraint:
+  fn: energy
+  bound: -80
+  model_type: gnn
+  date: "0923_1520"
+
+# constraint:
+#   fn: sascore
+#   bound: 6.5
+#   model_type: egnn
+#   date: "1027_1445"
+
+#### Augmented Lagrangian ####
+augmented_lagrangian:
+  lagrangian_updates: 6
+  rho_init: 1.0 # (default: 0.5)
+  eta: 1.25
+  tau: 0.99 # (default: 0.99)
+  lambda_min: -50.0 # (default: -10.0)
+  ## Sampling for expected constraint (lambda calculation) ##
+  sampling:
+    # sampler_type: "euler" is set by default
+    num_samples: 100
+    num_integration_steps: 100
+  lambda_init: 0.0 # just used if baseline
+
+#### Adjoint Matching ####
+reward_lambda: 50.0
+adjoint_matching:
+  N: 5 # if total_steps == 0: number of finetuning iterations else total_steps // lagrangian_updates
+  batch_size: 4 # batch_size is both used for number samples - sampled per batch an then for updates
+  clip_grad_norm: 0.0 # float - if 0.0 no clipping is done
+  lct: 0.0 # loss clipping term -> LCT = lct * reward_lambda**2
+  lr: 5e-6 # learning rate for the adjoint matching
+  # finetune_steps: 4 # should in [1, num_samples//batch_size] # if not set to num_samples//batch_size
+  max_nodes: 225
+  sampling:
+    sampler_type: "memoryless"
+    num_samples: 20
+    num_integration_steps: 40
+  cutoff_time: 0.5
+  samples_for_sumapproximation: 10
+  final_percent: 0.25
+  sample_percent: 0.25
+
+#### Sampling for calculating the true reward and constraint for logging ####
+reward_sampling:
+  # sampler_type: "euler" is set by default
+  num_samples: 100
+  num_integration_steps: 100
+
