@@ -8,7 +8,7 @@
 
 Given a pretrained generative flow model $p^\pi_\text{pre}$ and differentiable reward/constraint predictors, CFO solves:
 
-$$\max_\pi \; \mathbb{E}_{x \sim p^\pi_1}[r(x)] - \alpha \, D_\text{KL}(p^\pi_1 \| p^\text{pre}_1) \quad \text{s.t.} \quad \mathbb{E}_{x \sim p^\pi_1}[c(x)] \leq B$$
+$$\max_\pi \mathbb{E}_{x \sim p^\pi_1}[r(x)] - \alpha \, D_\text{KL}(p^\pi_1 \| p^\text{pre}_1) \quad \text{s.t.} \quad \mathbb{E}_{x \sim p^\pi_1}[c(x)] \leq B$$
 
 by alternating between:
 1. **Fine-tuning** the flow model via KL-regularized Adjoint Matching (Algorithm 2)
