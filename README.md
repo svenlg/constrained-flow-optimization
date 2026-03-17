@@ -31,10 +31,9 @@ pip install -e .  # or: pip install -e flowmol/
 
 ### Pretrained Models
 
-FlowMol weights are included under `flowmol/trained_models/`. Regressor weights must be placed under `pretrained_models/{property}/{model_type}/{date}/best_model.pt`.
+**FlowMol weights:** Download from the [FlowMol repository](https://github.com/Dunni3/FlowMol) and place under `flowmol/trained_models/`. The FlowMol repo also contains instructions for downloading the GEOM dataset files required at `data/geom/`.
 
-Available properties: `dipole`, `energy`, `score`, `sascore`.
-Model types: `gnn`, `egnn`.
+**Regressor weights:** Included in this repo under `pretrained_models/{property}/{model_type}/best_model.pt` for `dipole` (egnn) and `energy` (gnn).
 
 ## Quick Start
 
@@ -103,7 +102,6 @@ See `run_cfo.py` lines 184-237 for how the components are wired together.
 │    4. Update λ_{k+1} ← max(λ_k + ρ_k·g_k, λ_min)    │
 │    5. Update ρ_{k+1} (increase if needed)           │
 └─────────────────────────────────────────────────────┘
-
 ```
 
 ## Repository Structure

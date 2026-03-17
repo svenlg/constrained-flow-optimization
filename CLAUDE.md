@@ -34,7 +34,7 @@ python run_cfo.py --use_wandb --experiment "my_run" --seed 42  # Full run
 
 ### Other modules
 - **`flowmol/`** — Pretrained FlowMol generative model. Loaded via `flowmol.load_pretrained("geom_gaussian")`.
-- **`regressor/`** — GNN and EGNN property predictors. Weights in `pretrained_models/{fn}/{model_type}/{date}/best_model.pt`.
+- **`regressor/`** — GNN and EGNN property predictors. Weights in `pretrained_models/{fn}/{model_type}/best_model.pt`.
 - **`utils/`** — CLI argument parsing (`setup.py`), FlowMol sampling helper (`sampling.py`), plotting utilities.
 - **`auxiliary/`** — Regressor training, property calculation (not part of main pipeline).
 - **`notebooks/`** — Demo notebooks (`cfo_quickstart.ipynb`, `cfo_step_by_step.ipynb`) + paper figure notebooks.
@@ -52,13 +52,12 @@ run_cfo(
 
 ## Configuration
 
-YAML configs in `configs/` (gitignored). Config loaded with OmegaConf, CLI args override via `utils/setup.py:update_config_with_args()`.
+YAML configs in `configs/` (tracked). Config loaded with OmegaConf, CLI args override via `utils/setup.py:update_config_with_args()`.
 
 **Import note:** `run_cfo.py` adds `src/` to `sys.path` so imports are `from cfo import ...` and `from finetuning_solver.adjoint_matching import ...`.
 
 ## Gotchas
 
-- **Configs are gitignored** — YAML files in `configs/` won't appear in git status.
-- **Pretrained model paths are date-encoded** — regressor loading requires matching `{fn}/{model_type}/{date}` under `pretrained_models/`.
+- **Pretrained model paths** — regressor weights at `pretrained_models/{fn}/{model_type}/best_model.pt`. Only `dipole/egnn` and `energy/gnn` are included.
 - **`--debug` changes sample counts** — overrides num_samples, batch_size. Don't compare debug runs to production runs.
 - **`src/` path setup** — entry points must add `src/` to `sys.path` before importing `cfo` or `finetuning_solver`.
