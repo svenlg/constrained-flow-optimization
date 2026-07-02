@@ -28,3 +28,8 @@ __pycache__/
 *.gif
 *.mp4
 *.npy
+# project page — keep site images tracked
+!docs/static/images/*.png
+!docs/static/images/*.jpg
+!docs/static/images/*.jpeg
+!docs/static/images/*.svg

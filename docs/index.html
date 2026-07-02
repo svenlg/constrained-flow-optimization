@@ -446,8 +446,10 @@
     <div class="content has-text-justified">
       <p>
         On a 2-D mixture of Gaussians with a reward (distance to the white target) and a hard constraint (samples
-        must lie inside the red triangles), CFO concentrates mass in the feasible regions while moving toward
-        higher reward. Adjoint Matching alone improves reward but violates the constraint.
+        must lie inside the red triangles), <strong>CFO with either inner solver</strong> &mdash; gradient-based
+        <em>Adjoint Matching (AM)</em> or gradient-free <em>DiffusionNFT</em> &mdash; concentrates mass in the
+        feasible regions while pushing reward up. The unconstrained baselines alone improve reward but violate the
+        constraint.
       </p>
     </div>
     <div class="columns is-centered">
@@ -456,12 +458,57 @@
         <p><strong>Pre-trained</strong></p>
       </div>
       <div class="column has-text-centered">
-        <img src="./static/images/mog_cfo.png" alt="CFO samples">
-        <p><strong>CFO (ours)</strong></p>
+        <img src="./static/images/mog_cfo.png" alt="CFO+AM samples">
+        <p><strong>CFO<sub>AM</sub></strong> (ours)</p>
       </div>
       <div class="column has-text-centered">
         <img src="./static/images/mog_am.png" alt="Adjoint Matching samples">
-        <p><strong>Adjoint Matching</strong></p>
+        <p>Adjoint Matching</p>
+      </div>
+      <div class="column has-text-centered">
+        <img src="./static/images/mog_cfo_nft.png" alt="CFO+NFT samples">
+        <p><strong>CFO<sub>NFT</sub></strong> (ours)</p>
+      </div>
+    </div>
+
+    <div class="columns is-centered" style="margin-top: 1em;">
+      <div class="column is-three-quarters">
+        <table class="table is-fullwidth is-striped is-narrow">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="has-text-centered">$\Esymb[r(x)]\ \uparrow$</th>
+              <th class="has-text-centered">$\Esymb[c(x)]\ \downarrow$</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pre-trained</td>
+              <td class="has-text-centered">$-7.62 \pm 0.03$</td>
+              <td class="has-text-centered">$0.58 \pm 0.07$</td>
+            </tr>
+            <tr>
+              <td><strong>CFO<sub>AM</sub></strong> (ours)</td>
+              <td class="has-text-centered">$-4.75 \pm 0.04$</td>
+              <td class="has-text-centered">$0.12 \pm 0.06$</td>
+            </tr>
+            <tr>
+              <td>Adjoint Matching</td>
+              <td class="has-text-centered"><strong>$-2.93 \pm 0.03$</strong></td>
+              <td class="has-text-centered">$2.47 \pm 0.11$</td>
+            </tr>
+            <tr>
+              <td><strong>CFO<sub>NFT</sub></strong> (ours)</td>
+              <td class="has-text-centered">$-5.28 \pm 0.14$</td>
+              <td class="has-text-centered"><strong>$0.06 \pm 0.01$</strong></td>
+            </tr>
+            <tr>
+              <td>DiffusionNFT</td>
+              <td class="has-text-centered">$-3.59 \pm 0.10$</td>
+              <td class="has-text-centered">$1.76 \pm 0.05$</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -493,18 +540,77 @@
       <p>
         Applied to <strong>FlowMol</strong> pre-trained on <strong>GEOM-Drugs</strong>, CFO maximizes the
         molecular dipole moment (reward) while keeping the total xTB energy inside an $-80$&nbsp;Ha bound
-        (constraint). CFO matches the dipole of unconstrained Adjoint Matching but, unlike it, satisfies the
-        energy constraint throughout the run.
+        (constraint). With either <em>Adjoint Matching</em> or gradient-free <em>DiffusionNFT</em> as inner
+        solver, CFO drives the expected energy inside the feasible region &mdash; a boundary that
+        <strong>neither baseline crosses on its own</strong> &mdash; while attaining comparable dipole moment.
       </p>
     </div>
+
+    <p class="has-text-centered" style="margin: 1em 0 0.4em;">
+      <strong>CFO<sub>AM</sub></strong> &mdash; Adjoint Matching as inner solver (gradient-based)
+    </p>
     <div class="columns is-vcentered">
       <div class="column has-text-centered">
-        <img src="./static/images/mol_reward.png" alt="Dipole moment trajectory" style="max-width: 100%;">
-        <p><strong>Reward (dipole, D)</strong></p>
+        <img src="./static/images/mol_reward.png" alt="CFO+AM dipole trajectory" style="max-width: 100%;">
+        <p>Reward (dipole,&nbsp;D) &uarr;</p>
       </div>
       <div class="column has-text-centered">
-        <img src="./static/images/mol_constraint.png" alt="Energy trajectory" style="max-width: 100%;">
-        <p><strong>Constraint (energy, Ha)</strong></p>
+        <img src="./static/images/mol_constraint.png" alt="CFO+AM energy trajectory" style="max-width: 100%;">
+        <p>Constraint (energy,&nbsp;Ha) &mdash; bound at $-80$</p>
+      </div>
+    </div>
+
+    <p class="has-text-centered" style="margin: 1.5em 0 0.4em;">
+      <strong>CFO<sub>NFT</sub></strong> &mdash; DiffusionNFT as inner solver (gradient-free)
+    </p>
+    <div class="columns is-vcentered">
+      <div class="column has-text-centered">
+        <img src="./static/images/mol_nft_reward.png" alt="CFO+NFT dipole trajectory" style="max-width: 100%;">
+        <p>Reward (dipole,&nbsp;D) &uarr;</p>
+      </div>
+      <div class="column has-text-centered">
+        <img src="./static/images/mol_nft_constraint.png" alt="CFO+NFT energy trajectory" style="max-width: 100%;">
+        <p>Constraint (energy,&nbsp;Ha) &mdash; bound at $-80$</p>
+      </div>
+    </div>
+
+    <div class="columns is-centered" style="margin-top: 1.5em;">
+      <div class="column is-four-fifths">
+        <table class="table is-fullwidth is-striped is-narrow">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="has-text-centered">Pre-trained</th>
+              <th class="has-text-centered">CFO<sub>AM</sub></th>
+              <th class="has-text-centered">AM</th>
+              <th class="has-text-centered">CFO<sub>NFT</sub></th>
+              <th class="has-text-centered">DiffusionNFT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>$\Esymb[r(x)]\ \uparrow$</td>
+              <td class="has-text-centered">$6.55_{\pm 0.07}$</td>
+              <td class="has-text-centered"><strong>$8.39_{\pm 0.10}$</strong></td>
+              <td class="has-text-centered">$8.37_{\pm 0.07}$</td>
+              <td class="has-text-centered">$8.27_{\pm 0.19}$</td>
+              <td class="has-text-centered">$8.30_{\pm 0.07}$</td>
+            </tr>
+            <tr>
+              <td>$\Esymb[c(x)]\ (\le -80)$</td>
+              <td class="has-text-centered" style="color: #c02a2a;">$-77.86_{\pm 0.22}$</td>
+              <td class="has-text-centered" style="color: #2a7f3f;"><strong>$-82.28_{\pm 0.41}$</strong></td>
+              <td class="has-text-centered" style="color: #c02a2a;">$-78.31_{\pm 0.38}$</td>
+              <td class="has-text-centered" style="color: #2a7f3f;"><strong>$-80.72_{\pm 0.93}$</strong></td>
+              <td class="has-text-centered" style="color: #c02a2a;">$-78.67_{\pm 0.62}$</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="has-text-centered is-size-7" style="color: #666;">
+          Numeric evaluation (95% CI). <span style="color:#2a7f3f;">Green</span> satisfies the $-80$&nbsp;Ha energy bound;
+          <span style="color:#c02a2a;">red</span> violates it. Both CFO variants satisfy the constraint, neither
+          baseline does.
+        </p>
       </div>
     </div>
 
